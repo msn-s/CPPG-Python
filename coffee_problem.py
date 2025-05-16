@@ -21,11 +21,3 @@ print(f"The total amount of mL's of coffee sold this week was {total_ml} mL's")
 print(f"The shop used {total_grounds} grams of coffee grounds this week")
 
 
-
-
-
-#   scrapping this total_grounds = GRAMS_PER_CUP * (small_coffee * 1) + (medium_coffee * 2) + (large_coffee * 3) 
-#   writing the code was not the issue for me, it was the word problem however so im just leaving that up there so you can see
-#   the few processes i went through while, even simple math drives me nuts, however actually writing the word problem
-#   down on paper and doing it step by step helped, the constants also kept everything very clean and simple to read.
-#   without them i probably would have been VERY lost , so good practice thank you
