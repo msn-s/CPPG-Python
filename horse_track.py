@@ -7,12 +7,12 @@
 # hence the calculation for semi circles, we add both together to get the area of both of them.
 # we then take the rectangle area and square it as their are two rectangles.
 
-#import library
+# Import library
 
 import math
 # Importing this library for an accurate constant of PI, which is needed for our area calculations
 
-# Vars
+# Variables
 
 rectangle_length = float(input("What is the length of one of the rectangles? "))
 rectangle_width = float(input("What is the width of one of the rectangles? "))
