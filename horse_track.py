@@ -27,9 +27,12 @@ outer_radius = outer_diameter / 2
 circle_area = (PI * outer_radius * outer_radius) - (PI * inner_radius * inner_radius)
 total_area = circle_area + rectangle_area
 
-print(f" The total area of both semi circles is {circle_area} m². ")
+print(f"The total area of both semi circles is {circle_area} m².") 
+#not needed for final output. left in to make sure calculations were correct
 print(f"The total area of both rectangles is {rectangle_area} m².")
-print(f" Your total area is {total_area:.2f} m². ") 
+#not needed for final output. left in to make sure calculations were correct
+
+print(f"\nThe total area of the horse track is {total_area:.2f} m². \n") 
 # Outputting to two decimal places as we are working with meters squared in this case
 
 
