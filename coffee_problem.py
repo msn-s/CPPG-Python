@@ -7,12 +7,12 @@
 
 
 
-#constants
+# Constants
 ML_PER_CUP      = 250
 GRAMS_PER_CUP   = 10
 
 
-#vars
+# Vars
 small_coffee = int(input("Enter the amount of small coffees sold this week as a whole number. "))
 medium_coffee = int(input("Enter the amount of medium coffees sold this week as a whole number. "))
 large_coffee = int(input("Enter the amount of large coffees sold this week as a whole number. "))
