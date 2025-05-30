@@ -26,7 +26,7 @@ if len(equation) == 3:
     # Check if the first and third characters are digits
     if equation[0].isdigit() and equation[2].isdigit():
         # Check if the middle character is a valid operator (+, -, *, /)
-        if equation[1] in "+-*/":
+        if equation[1] in "+-/*":
             # Perform the calculation based on the operator, this is the case until line 38
             if equation[1] == "+":
                 calculation = int(equation[0]) + int(equation[2])
@@ -60,7 +60,7 @@ if valid_equation:
     print(f"The result for {equation} is {calculation}")
 else:
 # Do not print the calculation if it doesent pass the checks, as it will crash!
-    print("The equation is invalid, no result to display.")
+    print(ERROR_INVALID)
 
 # Closing message
 input(CLOSE_MESSAGE)
