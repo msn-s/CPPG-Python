@@ -1,4 +1,4 @@
-#Author:    Mason Hilder
+#Author:    Mason
 #Created:   June 5th 2025
 #Updated:   June 6th 2025
 #Description:
