@@ -38,9 +38,3 @@ print(f"The total area of both rectangles is {rectangle_area:.2f} m².") #not ne
 
 print(f"\nThe total area of the horse track is {total_area:.2f} m². \n") 
 # Outputting to two decimal places as we are working with meters squared in this case
-
-
-
-
-
-
