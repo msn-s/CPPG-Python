@@ -1,6 +1,6 @@
 # ------------------------------------------
 # Title: ICE5 - Student Presentations (Arrays and Lists)
-# Author: Mason Hilder
+# Author: Mason ~~Hilder~~
 # Date: July 8th 2025
 # Purpose: To demonstrate your knowledge of arrays and lists in Python.
 # ------------------------------------------
