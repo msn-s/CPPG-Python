@@ -100,11 +100,4 @@ while is_running:
         input("Press enter to exit program...")
         is_running = False 
     # Setting flag to false to exit main loop and close program   
-
-
-
-
-
-
-
 #endregion
