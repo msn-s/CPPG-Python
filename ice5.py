@@ -44,7 +44,7 @@ while is_running:
     while is_Valid:
         # While the users input is validated; loop
         if choice == 1:
-            studentName = input("\nEnter students name: ").strip()
+            studentName = input("\nEnter students name: ").strip().lower()
             studentList.append(studentName)
             print("\n%s has been added to the queue" % (studentName))
             is_Valid = False
@@ -62,7 +62,7 @@ while is_running:
             # If choice = 2, iterate through every elememnt in studentList array and print
         elif choice == 3:
             print("The next person in queue is %s" %  (studentList[0]))
-            is_Present = input("Is %s present today? (y/n): " % (studentList[0])).strip()
+            is_Present = input("Is %s present today? (y/n): " % (studentList[0])).strip().lower()
             if (is_Present == "y" or is_Present == "yes"):
                 print("\n%s successfully removed from queue" % (studentList[0]))
                 studentList.pop(0)
@@ -80,7 +80,7 @@ while is_running:
             is_Valid = False
 
         elif choice == 4:
-            student = input("Enter the students name you want to remove (case sensitive): ").strip()
+            student = input("Enter the students name you want to remove: ").strip().lower()
             if student in studentList:
                 studentList.remove(student)
                 # Storing input for student name to be removed
