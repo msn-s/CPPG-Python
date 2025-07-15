@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-# Author: Mason Hilder
+# Author: Mason 
 # Date July 15th, 2025
 # Purpose: A program that takes password as user input and validates it 
 # through 6 different functions that return if password is valid or not, 
