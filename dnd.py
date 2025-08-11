@@ -71,18 +71,22 @@ def characterComfirmation(state):
     global ability_wisdom
     global ability_charisma
 
+    # Ask user to confirm action (Save, Load, Delete)
     if messagebox.askyesno(title="%s Character Preset" % (state), message="Would you like to %s your character preset?" % (state)):
 
         if state == "Save":
+            # Get user inputs from UI fields
             name = entryName.get().strip()
             characterName = entryCharacterName.get().strip()
             species = cboSpecies.get().strip()
             classes = cboClass.get().strip()
 
+            # Check if any required field is empty
             if not name or not characterName or not species or not classes:
                 messagebox.showwarning("Missing Info", "Please fill in all fields before saving.")
                 return
 
+            # Collect current ability scores and points left
             strength = ability_strength
             dexterity = ability_dexterity
             constitution = ability_constitution
@@ -90,39 +94,43 @@ def characterComfirmation(state):
             wisdom = ability_wisdom
             charisma = ability_charisma
             pointsRemaining = available_points
+
+            # Pack all data into a list for saving
             tempStats = [
                 name, characterName, species, classes,  
                 strength, dexterity, constitution, intelligence,
                 wisdom, charisma, pointsRemaining   
             ]
-                # Storing saved stats into a temporary variable to append later on 
+
+            # Check if character with this name already exists to update or append
             index = -1
             for i in range(len(saved_characters)):
                 if saved_characters[i][0] == name:
                     index = i
             if index != -1:
-                saved_characters[index] = tempStats
+                saved_characters[index] = tempStats  # Update existing
             else:
-                saved_characters.append(tempStats)
-                # Loop through saved characters, if index remains -1, add the character stats to the list
-                # if it is not -1 replacing the existing data at that index with new stats
-                # this ensures the data is updated if the name already exists, or added if its new
+                saved_characters.append(tempStats)   # Add new
 
+            # Update dropdowns with new character list
             cboLoad.config(values=[char[NAME] for char in saved_characters])
             cboDelete.config(values=[char[NAME] for char in saved_characters])
             messagebox.showinfo("Saved", "Character saved successfully.")
 
         elif state == "Load":
+            # Get selected character name from dropdown
             selected_name = cboLoad.get().strip()
             if not selected_name:
                 messagebox.showwarning("No Selection", "Please select a character to load.")
                 return
 
             found = False
+            # Find the character data by name and load values into UI and variables
             for i in range(len(saved_characters)):
                 if saved_characters[i][0] == selected_name:
                     char = saved_characters[i]
 
+                    # Fill UI fields with loaded data
                     entryName.delete(0, tk.END)
                     entryName.insert(0, char[NAME])
 
@@ -132,6 +140,7 @@ def characterComfirmation(state):
                     cboSpecies.set(char[SPECIES])
                     cboClass.set(char[CLASS])
 
+                    # Load ability scores and points left
                     ability_strength = char[STRENGTH]
                     ability_dexterity = char[DEXTERITY]
                     ability_constitution = char[CONSTITUTION]
@@ -140,6 +149,7 @@ def characterComfirmation(state):
                     ability_charisma = char[CHARISMA]
                     available_points = char[POINTS_LEFT]
 
+                    # Update labels to show loaded stats
                     lblStrength.config(text="Strength: %s" % (ability_strength))
                     lblDexterity.config(text="Dexterity: %s" % (ability_dexterity))
                     lblConstitution.config(text="Constitution: %s" % (ability_constitution))
@@ -154,31 +164,34 @@ def characterComfirmation(state):
                 messagebox.showinfo("Loaded", "Character loaded successfully.")
 
         elif state == "Delete":
+            # Get selected character name from dropdown to delete
             selected_name = cboDelete.get().strip()
             if not selected_name:
                 messagebox.showwarning("No Selection", "Please select a character to delete.")
                 return
 
+            # Confirm deletion with user
             if messagebox.askyesno("Delete Character", "Are you sure you want to delete %s?" % (selected_name)):
                 found = False
                 new_list = []
+                # Rebuild the saved_characters list excluding the one to delete
                 for char in saved_characters:
                     if char[NAME] != selected_name:
                         new_list.append(char)
                     else:
                         found = True
-                saved_characters[:] = new_list  # If we have two users with same name, it will replace it, not needed but thought it would be nice
+                saved_characters[:] = new_list  # Replace with updated list
 
+                # Update dropdowns after deletion
                 cboLoad.config(values=[char[NAME] for char in saved_characters])
                 cboDelete.config(values=[char[NAME] for char in saved_characters])
                 if found:
                     messagebox.showinfo("Deleted", "Character deleted successfully.")
 
 
-
 def get_cost(score):
-    '''A function that returns the cost of total points needed depedning on the score of the ability'''
-
+    '''Returns the point cost for a given ability score based on DnD rules.'''
+    # Map scores 8-15 to their respective point costs
     if score == 8: return 0
     elif score == 9: return 1
     elif score == 10: return 2
@@ -188,9 +201,9 @@ def get_cost(score):
     elif score == 14: return 7
     elif score == 15: return 9
 
-def increasePoints(ability):
-    '''A function that increases skill points, taking the ability as a parameter when clicking on the button'''
 
+def increasePoints(ability):
+    '''Increase the specified ability score if points are available.'''
     global available_points
     global ability_strength
     global ability_intelligence
@@ -199,14 +212,16 @@ def increasePoints(ability):
     global ability_wisdom
     global ability_charisma
 
+    # Select ability to increase
     if ability == "Strength":
         old_score = ability_strength
         if old_score < 15:
             new_score = old_score + 1
+            # Calculate how many points this increase costs
             cost_change = get_cost(new_score) - get_cost(old_score)
             if available_points >= cost_change:
-                ability_strength = new_score
-                available_points -= cost_change
+                ability_strength = new_score  # Update ability
+                available_points -= cost_change  # Deduct cost
                 lblStrength.config(text="Strength: %s" % (ability_strength))
 
     elif ability == "Dexterity":
@@ -259,11 +274,13 @@ def increasePoints(ability):
                 available_points -= cost_change
                 lblCharisma.config(text="Charisma: %s" % (ability_charisma))
 
+    # Update points left label and tooltip
     lblPoints.config(text="Points Left: %s" % (available_points), font=("Arial", 11))
     Hovertip(lblPoints,"Available Points left: %s" % (available_points))
 
+
 def decreasePoints(ability):
-    '''A function that decreases skill points, taking the ability as a parameter when clicking on the button'''
+    '''Decrease the specified ability score if above minimum and refund points.'''
     global available_points
     global ability_strength
     global ability_intelligence
@@ -272,12 +289,14 @@ def decreasePoints(ability):
     global ability_wisdom
     global ability_charisma
 
+    # Decrease ability if above minimum of 8
     if ability == "Strength" and ability_strength > 8:
         old_score = ability_strength
         new_score = old_score - 1
+        # Calculate refunded points from decrease
         refund = get_cost(old_score) - get_cost(new_score)
-        ability_strength = new_score
-        available_points += refund
+        ability_strength = new_score  # Update ability
+        available_points += refund   # Refund points
         lblStrength.config(text="Strength: %s" % (ability_strength))
 
     elif ability == "Dexterity" and ability_dexterity > 8:
@@ -320,8 +339,10 @@ def decreasePoints(ability):
         available_points += refund
         lblCharisma.config(text="Charisma: %s" % (ability_charisma))
 
+    # Update points left label and tooltip
     lblPoints.config(text="Points Left: %s" % (available_points), font=("Arial", 11))
     Hovertip(lblPoints,"Available Points left: %s" % (available_points))
+
 #endregion
 
 #region Initialize UI
